@@ -1,1 +1,27 @@
-include: package:flutter_lints/flutter.yaml
+include: package:very_good_analysis/analysis_options.4.0.0.yaml
+
+
+analyzer:
+  plugins:
+    - custom_lint
+  errors:
+    invalid_annotation_target: ignore
+
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.gen.dart"
+    - "lib/firebase_options.dart"
+
+custom_lint:
+  rules:
+    # Explicitly disable one lint rule
+    - avoid_manual_providers_as_generated_provider_depenency: false
+
+
+linter:
+  rules:
+    public_member_api_docs: false
+    always_put_required_named_parameters_first: false
+
+
