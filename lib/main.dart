@@ -1,20 +1,31 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pastebin/core/services/storage/hive_storage_service.dart';
+import 'package:pastebin/core/services/storage/storage_service.dart';
+import 'package:pastebin/core/services/storage/storage_service_provider.dart';
+import 'package:pastebin/pastebin_app.dart';
 
 void main() {
-  runApp(const MainApp());
-}
+  runZonedGuarded<Future<void>>(
+    () async {
+      // Hive-specific initialization
+      await Hive.initFlutter();
+      final StorageService initializedStorageService = HiveStorageService();
+      await initializedStorageService.init();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
+      runApp(
+        ProviderScope(
+          overrides: [
+            storageServiceProvider.overrideWithValue(initializedStorageService),
+          ],
+          child: const PetsApp(),
         ),
-      ),
-    );
-  }
+      );
+    },
+    // ignore: only_throw_errors
+    (e, _) => throw e,
+  );
 }
