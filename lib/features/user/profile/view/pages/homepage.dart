@@ -19,7 +19,9 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: const SafeArea(
-        child: SizedBox(),
+        child: Center(
+          child: Text('HomePage'),
+        ),
       ),
     );
   }

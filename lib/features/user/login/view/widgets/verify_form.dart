@@ -71,7 +71,7 @@ class _EnterDigitText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Enter 4 digit verification code sent to your number',
+      'Enter 6 digit verification code sent to your number',
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.headlineSmall!.copyWith(
             fontWeight: AppFontWeight.medium,
@@ -142,13 +142,15 @@ class _ConfirmButton extends ConsumerWidget {
                   .verifyOtp(phone, otp);
 
               if (context.mounted) {
-                if (resp) {
-                  /// goto home page
+                final route = resp ? HomePage.route() : ProfilePage.route();
 
-                  unawaited(Navigator.push(context, HomePage.route()));
-                } else {
-                  unawaited(Navigator.push(context, ProfilePage.route()));
-                }
+                unawaited(
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    route,
+                    (route) => false,
+                  ),
+                );
               }
             } catch (err) {
               if (context.mounted) {

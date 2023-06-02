@@ -2,14 +2,9 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
-import 'package:pastebin/core/configs/configs.dart';
 import 'package:pastebin/core/services/storage/storage_service.dart';
 
 
-
-/// Provides auth token for request at petfinder
-/// for token
-/// See: https://www.petfinder.com/developers/v2/docs/
 class TokenInterceptor extends Interceptor {
   TokenInterceptor(this.storageService);
 
@@ -45,17 +40,10 @@ class TokenInterceptor extends Interceptor {
   }
 }
 
-
-/// get access token from petfinder
+/// get access token
 @visibleForTesting
 Future<String> refreshToken() async {
-  const oauthPath = '${Configs.apiBaseUrl}/oauth2/token';
-  final data = {
-    'grant_type': 'client_credentials',
-  };
+  /// TODO: should refresh token
 
-  final res = await Dio().post<Map<String, dynamic>>(oauthPath, data: data);
-
-  final token = res.data!['access_token'] as String;
-  return token;
+  return '';
 }

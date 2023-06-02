@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:pastebin/core/services/http/http_service.dart';
 import 'package:pastebin/features/user/login/repositories/auth_repository.dart';

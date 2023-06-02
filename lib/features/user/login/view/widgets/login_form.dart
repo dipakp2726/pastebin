@@ -96,6 +96,7 @@ class _PhoneNumberField extends ConsumerWidget {
         ),
         inputFormatters: [
           LengthLimitingTextInputFormatter(10),
+          FilteringTextInputFormatter.digitsOnly
         ],
         keyboardType: TextInputType.number,
         validator: (value) {

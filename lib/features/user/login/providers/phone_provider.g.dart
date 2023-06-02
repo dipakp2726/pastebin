@@ -6,9 +6,11 @@ part of 'phone_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$phoneAuthHash() => r'9a4e250f96fa0ddcb3713c739eb8a9accf5e52b2';
+String _$phoneAuthHash() => r'996dce1c0e1a27121fcf73cd0995aad302520334';
 
-/// See also [PhoneAuth].
+/// phone auth controller
+///
+/// Copied from [PhoneAuth].
 @ProviderFor(PhoneAuth)
 final phoneAuthProvider = AutoDisposeNotifierProvider<PhoneAuth, void>.internal(
   PhoneAuth.new,
