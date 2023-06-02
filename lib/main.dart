@@ -21,7 +21,7 @@ void main() {
           overrides: [
             storageServiceProvider.overrideWithValue(initializedStorageService),
           ],
-          child: const PetsApp(),
+          child: const PasteBinApp(),
         ),
       );
     },

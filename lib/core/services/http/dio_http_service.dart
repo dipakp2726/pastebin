@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:pastebin/core/configs/configs.dart';
 import 'package:pastebin/core/exceptions/http_exception.dart';
@@ -41,46 +43,40 @@ class DioHttpService implements HttpService {
 
   @override
   Future<Map<String, dynamic>> get(
-    String endpoint, {
-    Map<String, dynamic>? queryParameters,
-    bool forceRefresh = false,
-    String? customBaseUrl,
-  }) async {
-    final Response<dynamic> response = await dio.get<Map<String, dynamic>>(
-      endpoint,
-      queryParameters: queryParameters,
-    );
-    if (response.data == null || response.statusCode != 200) {
-      throw HttpException(
-        title: 'Http Error!',
-        statusCode: response.statusCode,
-        message: response.statusMessage,
+      String endpoint, {
+        Map<String, dynamic>? queryParameters,
+        bool forceRefresh = false,
+        String? customBaseUrl,
+      }) async {
+    try {
+      final Response<dynamic> response = await dio.get<Map<String, dynamic>>(
+        endpoint,
+        queryParameters: queryParameters,
       );
-    }
 
-    return response.data as Map<String, dynamic>;
+      return response.data as Map<String, dynamic>;
+    } on DioError catch (e) {
+      throw HttpException.fromDioError(e);
+    }
   }
 
   @override
   Future<dynamic> post(
-    String endpoint, {
-    Map<String, dynamic>? queryParameters,
-  }) async {
-    final Response<dynamic> response = await dio.post<Map<String, dynamic>>(
-      endpoint,
-      queryParameters: queryParameters,
-    );
-
-    if (response.data == null || response.statusCode != 200) {
-      throw HttpException(
-        title: 'Http Error!',
-        statusCode: response.statusCode,
-        message: response.statusMessage,
+      String endpoint, {
+        Map<String, dynamic>? queryParameters,
+      }) async {
+    try {
+      final response = await dio.post<dynamic>(
+        endpoint,
+        data: queryParameters,
       );
-    }
 
-    return response.data;
+      return jsonDecode(response.data as String);
+    } on DioError catch (e) {
+      throw HttpException.fromDioError(e);
+    }
   }
+
 
   @override
   Future<dynamic> delete() {
